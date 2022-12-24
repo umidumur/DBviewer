@@ -30,11 +30,16 @@ namespace DBviewer
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newTSButton = new System.Windows.Forms.ToolStripButton();
             this.loadTSButton = new System.Windows.Forms.ToolStripButton();
             this.saveTSButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutTSButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.selectTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.selectButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -44,18 +49,28 @@ namespace DBviewer
             this.treeView = new System.Windows.Forms.TreeView();
             this.invButton = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.okButton = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.okButton = new System.Windows.Forms.Button();
-            this.aboutTSButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.drawButton = new System.Windows.Forms.Button();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.closeChartButton = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -112,6 +127,23 @@ namespace DBviewer
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // aboutTSButton
+            // 
+            this.aboutTSButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.aboutTSButton.Image = ((System.Drawing.Image)(resources.GetObject("aboutTSButton.Image")));
+            this.aboutTSButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.aboutTSButton.Name = "aboutTSButton";
+            this.aboutTSButton.Size = new System.Drawing.Size(23, 22);
+            this.aboutTSButton.Text = "About";
+            this.aboutTSButton.ToolTipText = "About DBviewer ...";
+            this.aboutTSButton.Click += new System.EventHandler(this.aboutTSButton_Click);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(121, 22);
+            this.toolStripLabel1.Text = "                                      ";
             // 
             // selectTextBox
             // 
@@ -192,28 +224,38 @@ namespace DBviewer
             this.groupBox.Controls.Add(this.label1);
             this.groupBox.Location = new System.Drawing.Point(12, 207);
             this.groupBox.Name = "groupBox";
-            this.groupBox.Size = new System.Drawing.Size(210, 118);
+            this.groupBox.Size = new System.Drawing.Size(210, 110);
             this.groupBox.TabIndex = 5;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Query";
             // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(164, 75);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(40, 23);
+            this.okButton.TabIndex = 6;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(58, 82);
+            this.textBox3.Location = new System.Drawing.Point(58, 76);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 5;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(58, 56);
+            this.textBox2.Location = new System.Drawing.Point(58, 50);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 4;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(58, 30);
+            this.textBox1.Location = new System.Drawing.Point(58, 24);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 3;
@@ -221,7 +263,7 @@ namespace DBviewer
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 85);
+            this.label3.Location = new System.Drawing.Point(7, 79);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 2;
@@ -230,7 +272,7 @@ namespace DBviewer
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 59);
+            this.label2.Location = new System.Drawing.Point(7, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 1;
@@ -239,38 +281,118 @@ namespace DBviewer
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 33);
+            this.label1.Location = new System.Drawing.Point(7, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Product";
             // 
-            // okButton
+            // groupBox1
             // 
-            this.okButton.Location = new System.Drawing.Point(164, 81);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(40, 23);
-            this.okButton.TabIndex = 6;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            this.groupBox1.Controls.Add(this.closeChartButton);
+            this.groupBox1.Controls.Add(this.textBox6);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.drawButton);
+            this.groupBox1.Controls.Add(this.textBox5);
+            this.groupBox1.Controls.Add(this.textBox4);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Location = new System.Drawing.Point(12, 323);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(210, 117);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Data chart";
             // 
-            // aboutTSButton
+            // drawButton
             // 
-            this.aboutTSButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.aboutTSButton.Image = ((System.Drawing.Image)(resources.GetObject("aboutTSButton.Image")));
-            this.aboutTSButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.aboutTSButton.Name = "aboutTSButton";
-            this.aboutTSButton.Size = new System.Drawing.Size(23, 22);
-            this.aboutTSButton.Text = "About";
-            this.aboutTSButton.ToolTipText = "About DBviewer ...";
-            this.aboutTSButton.Click += new System.EventHandler(this.aboutTSButton_Click);
+            this.drawButton.Location = new System.Drawing.Point(164, 78);
+            this.drawButton.Name = "drawButton";
+            this.drawButton.Size = new System.Drawing.Size(40, 23);
+            this.drawButton.TabIndex = 9;
+            this.drawButton.Text = "Draw";
+            this.drawButton.UseVisualStyleBackColor = true;
+            this.drawButton.Click += new System.EventHandler(this.drawButton_Click);
             // 
-            // toolStripLabel1
+            // textBox5
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(121, 22);
-            this.toolStripLabel1.Text = "                                      ";
+            this.textBox5.Location = new System.Drawing.Point(58, 52);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(100, 20);
+            this.textBox5.TabIndex = 3;
+            this.textBox5.Text = "product";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(58, 25);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.TabIndex = 2;
+            this.textBox4.Text = "productsall";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 82);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Y value";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 55);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(43, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "X value";
+            // 
+            // chart1
+            // 
+            chartArea7.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chart1.Legends.Add(legend7);
+            this.chart1.Location = new System.Drawing.Point(566, 28);
+            this.chart1.Name = "chart1";
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chart1.Series.Add(series7);
+            this.chart1.Size = new System.Drawing.Size(338, 412);
+            this.chart1.TabIndex = 7;
+            this.chart1.Text = "chart1";
+            this.chart1.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(34, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Table";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(58, 79);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(100, 20);
+            this.textBox6.TabIndex = 6;
+            this.textBox6.Text = "profit";
+            // 
+            // closeChartButton
+            // 
+            this.closeChartButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.closeChartButton.Location = new System.Drawing.Point(164, 78);
+            this.closeChartButton.Name = "closeChartButton";
+            this.closeChartButton.Size = new System.Drawing.Size(40, 23);
+            this.closeChartButton.TabIndex = 8;
+            this.closeChartButton.Text = "CLS";
+            this.closeChartButton.UseVisualStyleBackColor = false;
+            this.closeChartButton.Visible = false;
+            this.closeChartButton.Click += new System.EventHandler(this.closeChartButton_Click);
             // 
             // Main
             // 
@@ -278,6 +400,8 @@ namespace DBviewer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(916, 452);
+            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.invButton);
             this.Controls.Add(this.treeView);
@@ -294,6 +418,9 @@ namespace DBviewer
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox.ResumeLayout(false);
             this.groupBox.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,6 +451,16 @@ namespace DBviewer
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.ToolStripButton aboutTSButton;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button drawButton;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button closeChartButton;
     }
 }
 

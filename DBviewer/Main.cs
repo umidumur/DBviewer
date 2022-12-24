@@ -47,6 +47,7 @@ namespace DBviewer
             DB = new Database();
             table = new DataTable();
             adapter = new MySqlDataAdapter();
+
         }
 
 
@@ -187,5 +188,47 @@ namespace DBviewer
             About aboutForm = new About();
             aboutForm.ShowDialog();
         }
+
+        private void drawButton_Click(object sender, EventArgs e)
+        {
+            DB.openConnection();
+            string axisX = textBox5.Text;
+            string axisY = textBox6.Text;
+            string tablename = textBox4.Text;
+            MySqlCommand command = new MySqlCommand("Select " + axisX + "," + axisY + " from " + tablename + ";", DB.getConnection());
+            adapter.SelectCommand = command;
+            clearAll();
+            adapter.Fill(table);
+            dataGridView1.DataSource = table;
+            DB.closeConnection();
+
+            chart1.Series.Clear();
+            chart1.Series.Add("Column");
+            chart1.Series.Add("Line");
+            chart1.Series["Column"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            chart1.Series["Line"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                string xValue = (table.Rows[i][axisX].ToString());
+                double yValue = Double.Parse(table.Rows[i][axisY].ToString());
+                chart1.Series["Column"].Points.AddXY(xValue, yValue);
+                chart1.Series["Line"].Points.AddXY(xValue, yValue);
+            }      
+            
+            chart1.Visible = true;
+            closeChartButton.Visible = true;
+            dataGridView1.ClientSize = new System.Drawing.Size(338, 412);
+
+        }
+
+        private void closeChartButton_Click(object sender, EventArgs e)
+        {
+            chart1.Visible = false;
+            closeChartButton.Visible = false;
+            dataGridView1.ClientSize = new System.Drawing.Size(676, 412);
+           
+        }
+
     }
 }
