@@ -22,7 +22,7 @@ namespace DBviewer
             MySqlConnection connection;
             public void buildConnectionString()
             {
-                constring = "Server=" + servername + "; Database=" + database + "; User ID=" + username + "; Password=" + password+ "; Convert Zero Datetime=True";
+                constring = "Server=" + servername + "; Database=" + database + "; User ID=" + username + "; Password=" + password + "; Convert Zero Datetime=True";
                 connection = new MySqlConnection(constring);
             }
             public void openConnection()
@@ -109,7 +109,7 @@ namespace DBviewer
 
         private void treeViewTables()
         {
-            string tablename;;
+            string tablename; ;
             int k = 0;
             treeView.Nodes.Clear();
             DB.buildConnectionString();
@@ -136,7 +136,7 @@ namespace DBviewer
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if ((firsttable != null) & (treeView.SelectedNode.Text != "Tables in database")) 
+            if ((firsttable != null) & (treeView.SelectedNode.Text != "Tables in database"))
             {
                 sqlcmd($"SELECT * FROM {treeView.SelectedNode.Text}");
             }
@@ -168,14 +168,14 @@ namespace DBviewer
             if (command.ExecuteNonQuery() > 0)
             {
                 sqlcmd("SELECT * FROM supplies");
-                MessageBox.Show("Supply added succesfully","Succes",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Supply added succesfully", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else 
+            else
             {
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
                 dataGridView1.DataSource = table;
-                MessageBox.Show("There is error, please check parameters","Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("There is error, please check parameters", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             DB.closeConnection();
             textBox1.Text = "";
@@ -193,9 +193,10 @@ namespace DBviewer
         {
             DB.openConnection();
             string axisX = textBox5.Text;
-            string axisY = textBox6.Text;
+            string axisY1 = textBox6.Text;
+            string axisY2 = textBox7.Text;
             string tablename = textBox4.Text;
-            MySqlCommand command = new MySqlCommand("Select " + axisX + "," + axisY + " from " + tablename + ";", DB.getConnection());
+            MySqlCommand command = new MySqlCommand("Select " + axisX + "," + axisY1 + "," + axisY2 + " from " + tablename + ";", DB.getConnection());
             adapter.SelectCommand = command;
             clearAll();
             adapter.Fill(table);
@@ -203,19 +204,20 @@ namespace DBviewer
             DB.closeConnection();
 
             chart1.Series.Clear();
-            chart1.Series.Add("Column");
-            chart1.Series.Add("Line");
-            chart1.Series["Column"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
-            chart1.Series["Line"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            chart1.Series.Add(axisY1);
+            chart1.Series.Add(axisY2);
+            chart1.Series[axisY1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            chart1.Series[axisY2].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
 
             for (int i = 0; i < table.Rows.Count; i++)
             {
                 string xValue = (table.Rows[i][axisX].ToString());
-                double yValue = Double.Parse(table.Rows[i][axisY].ToString());
-                chart1.Series["Column"].Points.AddXY(xValue, yValue);
-                chart1.Series["Line"].Points.AddXY(xValue, yValue);
-            }      
-            
+                double y1Value = Double.Parse(table.Rows[i][axisY1].ToString());
+                double y2Value = Double.Parse(table.Rows[i][axisY2].ToString());
+                chart1.Series[axisY1].Points.AddXY(xValue, y1Value);
+                chart1.Series[axisY2].Points.AddXY(xValue, y2Value);
+            }
+
             chart1.Visible = true;
             closeChartButton.Visible = true;
             dataGridView1.ClientSize = new System.Drawing.Size(338, 412);
@@ -227,7 +229,7 @@ namespace DBviewer
             chart1.Visible = false;
             closeChartButton.Visible = false;
             dataGridView1.ClientSize = new System.Drawing.Size(676, 412);
-           
+
         }
 
     }

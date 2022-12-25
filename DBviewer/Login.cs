@@ -1,5 +1,5 @@
-﻿using System;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
 
 namespace DBviewer
@@ -37,7 +37,7 @@ namespace DBviewer
                 return connection;
             }
         }
-    
+
 
         public void button1_Click(object sender, EventArgs e)
         {
@@ -52,8 +52,8 @@ namespace DBviewer
                 MessageBox.Show("Connection succesfully", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 db.closeConnection();
                 Close();
-            }    
-            
+            }
+
         }
     }
 }
